@@ -1,0 +1,61 @@
+{% extends 'admin/adminbase.html.twig' %}
+
+{% block body -%}
+
+<h4 class="card-title">Пользователи</h4>
+<div class="table-responsive">
+    <table class="records_list table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Аватар</th>
+                <th>Роль</th>
+                <th>Имя</th>
+                <th>Фамилия</th>
+                <th>Отчество</th>
+{#                <th>Дата рождения</th>#}
+                <th>E-mail</th>
+                <th>Телефон</th>
+                <th>Должность</th>
+{#                <th>Создано</th>#}
+{#                <th>Обновлено</th>#}
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('admin_user_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td><img src="{{ image_url(entity) }}" alt="image" class="profile-pic"></td>
+                <td>{{ entity.role }}</td>
+                <td>{{ entity.firstName }}</td>
+                <td>{{ entity.lastName }}</td>
+                <td>{{ entity.patronymic }}</td>
+{#                <td>{% if entity.dateBirth %}{{ entity.dateBirth|date('d.m.Y') }}{% endif %}</td>#}
+                <td>{{ entity.email }}</td>
+                <td>{{ entity.phone }}</td>
+                <td>{{ entity.position }}</td>
+{#                <td>{% if entity.createdAt %}{{ entity.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>#}
+{#                <td>{% if entity.updatedAt %}{{ entity.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>#}
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('admin_user_show', { 'id': entity.id }) }}">Показать</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('admin_user_edit', { 'id': entity.id }) }}">Редактировать</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+        <br>
+        <a class="btn btn-outline-primary btn-fw" href="{{ path('admin_user_new') }}">
+            Создать запись
+        </a>
+</div>
+
+
+{% endblock %}

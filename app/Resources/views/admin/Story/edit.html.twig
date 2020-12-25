@@ -1,0 +1,115 @@
+{% extends 'admin/adminbase.html.twig' %}
+{% block stylesheets %}
+<!-- <script src="https://cdn.ckeditor.com/4.14.1/standard/ckeditor.js"></script> -->
+<script src="/js/ckeditor/ckeditor.js"></script>
+{% endblock %}
+
+{% block body -%}
+
+<h4>Редактирование новости</h4>
+
+{{ form(edit_form) }}
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('admin_story') }}">
+            Назад к списку
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+
+{% endblock %}
+
+{% block javascripts %}
+<script>
+
+	CKEDITOR.config.height = 500; 
+	CKEDITOR.config.allowedContent = true;
+	CKEDITOR.replace( "appbundle_story_post_text" , {
+        on: {
+            contentDom: function() {
+                this.editable().on( 'click', function( evt ) {
+                    // // console.log(evt);
+                    var target = evt.data.getTarget();
+                    // console.log(target);
+                    if ( target.is( 'input' )  ) {
+                        if (target.getAttribute( 'type' )=='checkbox')
+                        {
+                            // console.log( 'clicked checkbox!' );
+                            // console.log(target.$);
+                            target.setAttribute('style', 'background-color:#000;');
+                            if (target.hasAttribute('checked') && target.getAttribute('checked'))
+                                target.removeAttribute( 'checked' );
+                            else
+                                target.setAttribute('checked', true);
+                            
+                            // target.setAttribute('checked', true);
+                            target.removeAttribute( 'hidden' );
+                        }
+                        
+                        if (target.getAttribute( 'type' )=='button')
+                        {
+                            if (target.getAttribute( 'data-cke-pa-onclick' ) == "remove(this)"){
+                                remove(target.$);
+                            }
+                            if (target.getAttribute( 'data-cke-pa-onclick' ) == "moveDown(this)"){
+                                moveDown(target.$);
+                            }
+                            if (target.getAttribute( 'data-cke-pa-onclick' ) == "moveUp(this)"){
+                                moveUp(target.$);
+                            }
+                            if (target.getAttribute( 'data-cke-pa-onclick' ) == "disable(this)"){
+                                if (target.getAttribute( 'data-ch' )=='false'){
+                                    target.setStyle('background-color', '#88f');
+                                    target.setAttribute('data-ch', 'true');
+                                    target.setValue('Раскрыть');
+                                } else {
+                                    target.setStyle('background-color', '#999');
+                                    target.setAttribute('data-ch', 'false');
+                                    target.setValue('Cкрыть');
+                                }
+                            }
+
+                            if (target.getAttribute( 'data-cke-pa-onclick' ) == "deleteCar(this)"){
+                                deleteCar(target.$);
+                            }
+                        }
+                    }
+
+                    // if (target.is('button'))
+                    // {
+                    //     // console.log(target.$ );
+                    //     if (target.getAttribute( 'data-cke-pa-onclick' ) == "remove"){
+                    //         remove(target.$);
+                    //     }
+                    //     // // console.log(target.$);
+                    //     //     target.$.click();
+                    // }
+
+                    function moveDown(e) {
+                        $($(e).parent().parent()).insertAfter($($(e).parent().parent().next()));
+                    }
+
+                    function moveUp(e) {
+                        $($(e).parent().parent()).insertBefore($($(e).parent().parent().prev()));
+                    }
+
+                    function remove(e) {
+                        $($(e).parent().parent()).remove();
+                    }
+
+                    function deleteCar(e) {
+                        $($(e).parent()).remove();
+                    }
+                } );
+            }
+        },
+		filebrowserUploadUrl: "/ck_upload.php?type=file",
+        filebrowserImageUploadUrl: '/ck_upload.php?type=image',
+        filebrowserUploadMethod: 'form',
+        extraPlugins: 'quote,reference,related,tooltip,gallery'
+    });
+
+</script>
+{% endblock %}

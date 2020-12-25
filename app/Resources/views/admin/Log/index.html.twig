@@ -1,0 +1,20 @@
+{% extends 'admin/adminbase.html.twig' %}
+{% block body -%}
+    <h1>prod.log</h1>
+    <div>
+    	<a href="/admin/log/clear">Очистить лог</a>
+    	<a href="/admin/log/clearcache">Очистить cache</a>
+    </div>
+    <div class="table-responsive">
+        <table class="records_list table table-striped">
+            <tbody>
+            {% for entity in entities %}
+                <tr>
+                    <td>{{ entity }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+

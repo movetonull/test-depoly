@@ -1,0 +1,42 @@
+{% extends 'admin/adminbase.html.twig' %}
+
+{% block body %}
+    <h1>Термины</h1>
+    <div class="table-responsive">
+        <table class="records_list table table-striped">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Название</th>
+                    <th>Описание</th>
+                    <th>Действия</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for term in terms %}
+                <tr>
+                    <td><a href="{{ path('admin_term_show', { 'id': term.id }) }}">{{ term.id }}</a></td>
+                    <td>{{ term.name }}</td>
+                    <td>{{ term.description }}</td>
+                    <td>
+                        <ul>
+                            <li>
+                                <a href="{{ path('admin_term_show', { 'id': term.id }) }}">Показать</a>
+                            </li>
+                            <li>
+                                <a href="{{ path('admin_term_edit', { 'id': term.id }) }}">Редактировать</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <ul>
+        <li>
+            <a  class="btn btn-primary" href="{{ path('admin_term_new') }}">Создать</a>
+        </li>
+    </ul>
+{% endblock %}

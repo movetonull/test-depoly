@@ -1,0 +1,16 @@
+{% extends 'admin/adminbase.html.twig' %}
+
+{% block body %}
+    <h1>Создание спецпроекта</h1>
+
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <input class="btn btn-primary" type="submit" value="Сохранить" />
+    {{ form_end(form) }}
+
+    <ul>
+        <li>
+            <a href="{{ path('admin_specialproject_index') }}">Назад к списку</a>
+        </li>
+    </ul>
+{% endblock %}

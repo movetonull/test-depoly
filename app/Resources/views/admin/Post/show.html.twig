@@ -1,0 +1,49 @@
+{% extends 'admin/adminbase.html.twig' %}
+
+{% block body %}
+
+<h4>Новость</h4>
+<table class="table table-striped">
+    <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ entity.id }}</td>
+        </tr>
+        <tr>
+            <th>Заголовок</th>
+            <td>{{ entity.title }}</td>
+        </tr>
+        <tr >
+            <th>Изображение</th>
+            <td class="img-normal"><img  style="width:90%; height:auto" src="{{ entity.imgUrl }}"></td>
+        </tr>
+        <tr>
+            <th>Текст</th>
+            <td class="img-normal">{{ entity.text|raw }}</td>
+        </tr>
+        <tr>
+            <th>Дата создания</th>
+            <td>{{ entity.createdAt|date('Y-m-d H:i:s') }}</td>
+        </tr>
+        <tr>
+            <th>Дата редактирования</th>
+            <td>{{ entity.updatedAt|date('Y-m-d H:i:s') }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('admin_post') }}">
+            Назад к списку
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('admin_post_edit', { 'id': entity.id }) }}">
+            Редактировать
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+
+{% endblock %}

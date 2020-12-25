@@ -1,0 +1,48 @@
+{% extends 'admin/adminbase.html.twig' %}
+
+{% block body %}
+    <h1>Спецпроект</h1>
+
+    <table class="table table-striped">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ specialProject.id }}</td>
+            </tr>
+            <tr>
+                <th>Тип</th>
+                <td>{{ specialProject.type }}</td>
+            </tr>
+            <tr>
+                <th>Заголовок</th>
+                <td>{{ specialProject.title }}</td>
+            </tr>
+            <tr>
+                <th>Путь до изображения</th>
+                <td>{{ specialProject.imgUrl }}</td>
+            </tr>
+            <tr>
+                <th>Содержание</th>
+                <td>{{ specialProject.content }}</td>
+            </tr>
+            <tr>
+                <th>Ссылка</th>
+                <td>{{ specialProject.link }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('admin_specialproject_index') }}">Назад к списку</a>
+        </li>
+        <li>
+            <a href="{{ path('admin_specialproject_edit', { 'id': specialProject.id }) }}">Редактировать</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input class="btn btn-danger" type="submit" value="Удалить">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

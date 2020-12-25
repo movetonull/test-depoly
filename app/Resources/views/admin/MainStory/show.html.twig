@@ -1,0 +1,44 @@
+{% extends 'admin/adminbase.html.twig' %}
+
+{% block body %}
+    <h4>Главная новость</h4>
+
+    <table class="table table-striped">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ mainStory.id }}</td>
+            </tr>
+            <tr>
+                <th>Позиция</th>
+                <td>{{ mainStory.position }}</td>
+            </tr>
+            <tr>
+                <th>Дата создания</th>
+                <td>{% if mainStory.createdAt %}{{ mainStory.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Дата редактирования</th>
+                <td>{% if mainStory.updatedAt %}{{ mainStory.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Id новости</th>
+                <td>{{ mainStory.storyId }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('admin_mainstory_index') }}">Назад к списку</a>
+        </li>
+        <li>
+            <a href="{{ path('admin_mainstory_edit', { 'id': mainStory.id }) }}">Редактировать</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input class="btn btn-danger" type="submit" value="Удалить">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

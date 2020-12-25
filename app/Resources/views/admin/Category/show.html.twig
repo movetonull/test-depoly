@@ -1,0 +1,40 @@
+{% extends 'admin/adminbase.html.twig' %}
+
+{% block body -%}
+    <h4>Категория</h4>
+
+    <table class="table table-striped">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Название</th>
+                <td>{{ entity.name }}</td>
+            </tr>
+{#            <tr>#}
+{#                <th>Дата создания</th>#}
+{#                <td>{{ entity.createdAt|date('Y-m-d H:i:s') }}</td>#}
+{#            </tr>#}
+{#            <tr>#}
+{#                <th>Дата редактирования</th>#}
+{#                <td>{{ entity.updatedAt|date('Y-m-d H:i:s') }}</td>#}
+{#            </tr>#}
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('admin_category') }}">
+            Назад к списку
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('admin_category_edit', { 'id': entity.id }) }}">
+            Редактировать
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends 'admin/adminbase.html.twig' %}
+
+{% block body %}
+    <h1>Объявление</h1>
+
+    <table class="table table-striped">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ announcement.id }}</td>
+            </tr>
+            <tr>
+                <th>Тип</th>
+                <td>{{ announcement.type }}</td>
+            </tr>
+            <tr>
+                <th>Заголовок</th>
+                <td>{{ announcement.post.title }}</td>
+            </tr>
+            <tr>
+                <th>Дата</th>
+                <td>{% if announcement.date %}{{ announcement.date|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Путь до изображения</th>
+                <td>{{ announcement.imgUrl }}</td>
+            </tr>
+{#            <tr>#}
+{#                <th>Ссылка</th>#}
+{#                <td>{{ announcement.link }}</td>#}
+{#            </tr>#}
+            <tr>
+                <th>Просмотры</th>
+                <td>{{ announcement.post.viewsCount }}</td>
+            </tr>
+            <tr>
+                <th>Лайки</th>
+                <td>{{ announcement.post.likesCount }}</td>
+            </tr>
+            <tr>
+                <th>Репосты</th>
+                <td>{{ announcement.post.repostsCount }}</td>
+            </tr>
+            <tr>
+                <th>Дата создания</th>
+                <td>{% if announcement.post.record.createdAt %}{{ announcement.post.record.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Дата редактирования</th>
+                <td>{% if announcement.post.record.updatedAt %}{{ announcement.post.record.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('admin_announcement_index') }}">Назад к списку</a>
+        </li>
+        <li>
+            <a href="{{ path('admin_announcement_edit', { 'id': announcement.id }) }}">Редактировать</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input class="btn btn-danger" type="submit" value="Удалить">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

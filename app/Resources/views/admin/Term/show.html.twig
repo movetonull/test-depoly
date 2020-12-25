@@ -1,0 +1,36 @@
+{% extends 'admin/adminbase.html.twig' %}
+
+{% block body %}
+    <h1>Термин</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ term.id }}</td>
+            </tr>
+            <tr>
+                <th>Название</th>
+                <td>{{ term.name }}</td>
+            </tr>
+            <tr>
+                <th>Описание</th>
+                <td>{{ term.description }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('admin_term_index') }}">Назад к списку</a>
+        </li>
+        <li>
+            <a  class="btn btn-primary" href="{{ path('admin_term_edit', { 'id': term.id }) }}">Редактировать</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input  class="btn btn-danger" type="submit" value="Удалить">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

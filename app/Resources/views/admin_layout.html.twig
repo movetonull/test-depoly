@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-COMPATIBLE" content="IE=Edge" />
+    <title>{% block title %}Портал «Газпром нефть»{% endblock %}</title>
+    {% block stylesheets %}
+        {#{% if ('prod' == app.environment) %}#}
+        {#<link rel="stylesheet" href="{{ asset('css/main.min.css') }}" type="text/css" media="screen, projection" />#}
+        {#{% else %}#}
+        {#<link rel="stylesheet" href="{{ asset('css/main.css') }}" type="text/css" media="screen, projection" />#}
+        {#{% endif %}#}
+    {% endblock %}
+    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}" />
+</head>
+<body>
+<div class="wrapper">
+    <header class="header">
+        <div class="container">
+            <div class="header__title" style="text-align: center;">Портал «Газпром нефть»</div>
+            <a class="header__logo" href="http://portal.gazprom-neft.local" target="_blank"></a>
+        </div>
+    </header>
+    <section class="content">
+        <div class="container">
+            {% block body %}{% endblock %}
+        </div>
+    </section>
+</div>
+<footer class="footer" style="text-align: center;">
+    <div class="container">
+        <div class="footer__copyright">© Газпром нефть, 2020</div>
+    </div>
+</footer>
+{% block javascripts %}{% endblock %}
+</body>
+</html>

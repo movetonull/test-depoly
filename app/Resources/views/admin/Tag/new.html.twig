@@ -1,0 +1,14 @@
+{% extends 'admin/adminbase.html.twig' %}
+{% block body -%}
+    <h1>Создание тега</h1>
+
+    {{ form(form) }}
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('admin_tag') }}">
+            Назад к списку
+        </a>
+    </li>
+</ul>
+{% endblock %}

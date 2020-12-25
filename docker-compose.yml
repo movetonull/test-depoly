@@ -1,0 +1,76 @@
+version: '3.6'
+
+services:
+  ### NGINX Server #########################################
+  http:
+    image: nginx:1.17-alpine
+    depends_on:
+      - php-fpm
+    networks:
+      - traefik_default
+      - bridge
+    labels:
+      - "traefik.enable=true"
+      - traefik.frontend.rule=Host:gpn-hr-demo.docker
+      - "traefik.docker.network=traefik_default"
+      - "traefik.http.routers.gpn_hr_demo.rule=Host(`gpn-hr-demo.docker`)"
+      - "traefik.http.routers.gpn_hr_demo.tls=true"
+      - "traefik.http.routers.gpn_hr_demo.tls.certresolver=default"
+    volumes:
+      - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}
+      - .docker/nginx/nginx.conf:/etc/nginx/nginx.conf:rw
+      - .docker/nginx/conf.d:/etc/nginx/conf.d:rw
+
+  ### PHP-FPM ##############################################
+  php-fpm:
+    expose:
+      - "9000"
+    restart: always
+    build:
+      context: .docker/php
+      dockerfile: Dockerfile
+      target: base
+      args:
+        USER_ID: ${DOCKER_USER_UID}
+        USER_NAME: ${DOCKER_USER_NAME}
+        GROUP_ID: ${DOCKER_GROUP_ID}
+    user: ${DOCKER_USER_NAME}
+    environment:
+      - PHP_IDE_CONFIG=${PHP_IDE_CONFIG}
+    extra_hosts:
+      - host.docker.internal:${DOCKER_HOST_IP}
+    depends_on:
+      - mysql
+    networks:
+      - bridge
+    volumes:
+      - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}
+      - ./.docker/php/php.ini:/usr/local/etc/php/php.ini
+
+  ### Mysql ################################################
+  mysql:
+    build:
+      context: .docker/mysql
+    environment:
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - TZ=${MYSQL_TIMEZONE}
+    ports:
+      - ${MYSQL_HOST_PORT}:3306
+    networks:
+      - bridge
+    volumes:
+      - ./mysql:/var/lib/mysql
+      - .docker/mysql/initdb:/docker-entrypoint-initdb.d
+
+networks:
+  traefik_default:
+    external: true
+  bridge:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.227.0/28

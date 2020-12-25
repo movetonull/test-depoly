@@ -1,0 +1,33 @@
+{% extends 'admin/adminbase.html.twig' %}
+{% block stylesheets %}
+	<script src="/js/ckeditor/ckeditor.js"></script>
+{% endblock %}
+
+{% block body -%}
+
+			<h4>Создание новости</h4>
+
+			{{ form(form) }}
+
+			<ul class="record_actions">
+				<li>
+					<a href="{{ path('admin_post') }}">
+						Назад к списку
+					</a>
+				</li>
+			</ul>
+
+{% endblock %}
+
+{% block javascripts %}
+<script>
+	CKEDITOR.config.height = 500; 
+	CKEDITOR.config.allowedContent = true;
+	CKEDITOR.replace( "appbundle_post_text" , {
+		filebrowserUploadUrl: "/ck_upload.php?type=file",
+        filebrowserImageUploadUrl: '/ck_upload.php?type=image',
+        filebrowserUploadMethod: 'form',
+        extraPlugins: 'video,quote,reference,related,tooltip'
+    });
+</script>
+{% endblock %}

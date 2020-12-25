@@ -1,0 +1,156 @@
+{% extends 'admin/adminbase.html.twig' %}
+{% block stylesheets %}
+<!-- <script src="https://cdn.ckeditor.com/4.14.1/standard/ckeditor.js"></script> -->
+<script src="/js/ckeditor/ckeditor.js"></script>
+{% endblock %}
+
+{% block body %}
+    <h1>Редактирование объявления</h1>
+
+    {{ form_start(edit_form) }}
+        {{ form_widget(edit_form) }}
+        <input type="submit" value="Сохранить"  class="btn btn-primary" />
+    {{ form_end(edit_form) }}
+
+    <ul>
+        <li>
+            <a href="{{ path('admin_announcement_index') }}">Назад к списку</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input class="btn btn-danger" type="submit" value="Удалить">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}
+{% block javascripts %}
+<script>
+    switchFields($('#appbundle_announcement_type').val());
+
+    $('#appbundle_announcement_type').on('change',function (value) {
+        var value = this.value;
+        switchFields(value);
+    });
+    function switchFields(value) {
+        if (value == 'banner')
+        {
+            $("[for='appbundle_announcement_imgUrl']").show();
+            $('#appbundle_announcement_imgUrl').show();
+
+
+            $('#appbundle_announcement_date').prev().removeAttr('required').hide();
+            $('#appbundle_announcement_date').hide();
+        }
+
+        if (value == 'announcement')
+        {
+            $("[for='appbundle_announcement_imgUrl']").hide();
+            $('#appbundle_announcement_imgUrl').hide();
+
+
+            $('#appbundle_announcement_date').prev().prop('required',true).show();
+            $('#appbundle_announcement_date').show();
+        }
+
+        if (value == 'text')
+        {
+            $("[for='appbundle_announcement_imgUrl']").removeAttr('required').hide();
+            $('#appbundle_announcement_imgUrl').removeAttr('required').hide();
+            $("[for='appbundle_announcement_imgFile']").removeAttr('required').hide();
+            $('#appbundle_announcement_imgFile').removeAttr('required').hide();
+
+
+            $('#appbundle_announcement_date').prev().removeAttr('required').hide();
+            $('#appbundle_announcement_date').hide();
+        }
+    }
+
+
+    CKEDITOR.config.height = 500; 
+    CKEDITOR.config.allowedContent = true;
+    CKEDITOR.replace( "appbundle_announcement_post_text" , {
+        on: {
+            contentDom: function() {
+                this.editable().on( 'click', function( evt ) {
+                    // // console.log(evt);
+                    var target = evt.data.getTarget();
+                    // console.log(target);
+                    if ( target.is( 'input' )  ) {
+                        if (target.getAttribute( 'type' )=='checkbox')
+                        {
+                            // console.log( 'clicked checkbox!' );
+                            // console.log(target.$);
+                            target.setAttribute('style', 'background-color:#000;');
+                            if (target.hasAttribute('checked') && target.getAttribute('checked'))
+                                target.removeAttribute( 'checked' );
+                            else
+                                target.setAttribute('checked', true);
+                            
+                            // target.setAttribute('checked', true);
+                            target.removeAttribute( 'hidden' );
+                        }
+                        
+                        if (target.getAttribute( 'type' )=='button')
+                        {
+                            if (target.getAttribute( 'data-cke-pa-onclick' ) == "remove(this)"){
+                                remove(target.$);
+                            }
+                            if (target.getAttribute( 'data-cke-pa-onclick' ) == "moveDown(this)"){
+                                moveDown(target.$);
+                            }
+                            if (target.getAttribute( 'data-cke-pa-onclick' ) == "moveUp(this)"){
+                                moveUp(target.$);
+                            }
+                            if (target.getAttribute( 'data-cke-pa-onclick' ) == "disable(this)"){
+                                if (target.getAttribute( 'data-ch' )=='false'){
+                                    target.setStyle('background-color', '#88f');
+                                    target.setAttribute('data-ch', 'true');
+                                    target.setValue('Раскрыть');
+                                } else {
+                                    target.setStyle('background-color', '#999');
+                                    target.setAttribute('data-ch', 'false');
+                                    target.setValue('Cкрыть');
+                                }
+                            }
+
+                            if (target.getAttribute( 'data-cke-pa-onclick' ) == "deleteCar(this)"){
+                                deleteCar(target.$);
+                            }
+                        }
+                    }
+
+                    // if (target.is('button'))
+                    // {
+                    //     // console.log(target.$ );
+                    //     if (target.getAttribute( 'data-cke-pa-onclick' ) == "remove"){
+                    //         remove(target.$);
+                    //     }
+                    //     // // console.log(target.$);
+                    //     //     target.$.click();
+                    // }
+
+                    function moveDown(e) {
+                        $($(e).parent().parent()).insertAfter($($(e).parent().parent().next()));
+                    }
+
+                    function moveUp(e) {
+                        $($(e).parent().parent()).insertBefore($($(e).parent().parent().prev()));
+                    }
+
+                    function remove(e) {
+                        $($(e).parent().parent()).remove();
+                    }
+
+                    function deleteCar(e) {
+                        $($(e).parent()).remove();
+                    }
+                } );
+            }
+        },
+        filebrowserUploadUrl: "/ck_upload.php?type=file",
+        filebrowserImageUploadUrl: '/ck_upload.php?type=image',
+        filebrowserUploadMethod: 'form',
+        extraPlugins: 'quote,reference,related,tooltip,gallery'
+    });
+</script>
+{% endblock %}

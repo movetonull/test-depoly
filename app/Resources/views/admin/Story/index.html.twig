@@ -1,0 +1,78 @@
+{% extends 'admin/adminbase.html.twig' %}
+
+
+{% block body %}
+
+    <h4 class="card-title">{{title}}Новости</h4>
+
+    {% if entities.pageCount > 1 %}
+    <ul class="pagination pagination-sm">
+        {# `«` arrow  #}
+        <li {{ entities.currentPage == 1 ? 'class="disabled"' }}>
+            <a href="{{ path('admin_story', {page: entities.currentPage-1 < 1 ? 1 : entities.currentPage-1}) }}">«</a>
+        </li>
+
+        {# Render each page number #}
+        {% for i in 1..entities.pageCount %}
+        <li {{ entities.currentPage == i ? 'class="active"' }}>
+        <a href="{{ path('admin_story', {page: i}) }}">{{ i }}</a>
+        </li>
+        {% endfor %}
+
+        {# `»` arrow #}
+        <li {{ entities.currentPage == entities.pageCount ? 'class="disabled"' }}>
+            <a href="{{ path('admin_story', {page: entities.currentPage+1 <= entities.pageCount ? entities.currentPage+1 : entities.currentPage}) }}">»</a>
+        </li>
+    </ul>
+    {% endif %}
+
+    <div class="table-responsive">
+        <table class="records_list table table-striped">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Изображение</th>
+                    <th>Заголовок</th>
+                    <th>Текст</th>
+                    <th>Просмотры/Лайки/Репосты</th>
+                    <th>Дата создания</th>
+                    <th>Дата редактирования</th>
+                    <th>Действия</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for entity in entities.data %}
+                <tr>
+                    <td><a href="{{ path('admin_story_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                    <td class="img-normal"><img style="width:90%; height:auto" src="{{ image_url(entity) }}"></td>
+                    <td>{{ entity.post.title }}</td>
+                    <td>{{ entity.post.text|striptags|length > 300 ? entity.post.text|striptags|slice(0, 300) ~ '...' : entity.post.text|striptags }}</td> 
+                    <td>{{ entity.post.viewsCount }}/{{ entity.post.likesCount }}/{{ entity.post.repostsCount }}</td>
+                    <td>{% if entity.post.record.createdAt %}{{ entity.post.record.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                    <td>{% if entity.post.record.updatedAt %}{{ entity.post.record.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                    <td>
+                        <ul>
+                            <li>
+                                <a href="{{ path('admin_story_show', { 'id': entity.id }) }}">Показать</a>
+                            </li>
+                            <li>
+                                <a href="{{ path('admin_story_edit', { 'id': entity.id }) }}">Редактировать</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <ul>
+        <li>
+            <a class="btn btn-outline-primary btn-fw" href="{{ path('admin_story_new') }}">
+                Создать запись
+            </a>
+        </li>
+    </ul>
+
+
+{% endblock %}

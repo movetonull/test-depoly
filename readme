@@ -1,0 +1,6 @@
+
+echo "Host git.accurateweb.ru\n\t HostName git.accurateweb.ru\n\t Port 2022\n" >> /home/alex/.ssh/config
+chmod 0400 /home/alex/.ssh/id_rsa
+
+перейти в консоль и выполнить
+eval $(ssh-agent -s) && ssh-add /home/alex/.ssh/id_rsa

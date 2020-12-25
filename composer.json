@@ -1,0 +1,110 @@
+{
+  "name": "symfony/framework-standard-edition",
+  "license": "MIT",
+  "type": "project",
+  "description": "The \"Symfony Standard Edition\" distribution",
+  "autoload": {
+    "psr-4": {
+      "": "src/"
+    },
+    "classmap": [ "app/AppKernel.php", "app/AppCache.php" ]
+  },
+  "autoload-dev": {
+    "files": [ "vendor/symfony/symfony/src/Symfony/Component/VarDumper/Resources/functions/dump.php" ]
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "repositories": [
+    {
+      "type": "git",
+      "url": "git@git.accurateweb.ru:accurateweb/gpnuserbundle.git"
+    },
+    {
+      "type": "git",
+      "url": "git@git.accurateweb.ru:accurateweb/gpn-website-analytics-bundle.git"
+    },
+    {
+      "type": "git",
+      "url": "https://github.com/accurateweb/client-application-bundle.git"
+    },
+    {
+      "type": "git",
+      "url": "https://github.com/accurateweb/image-bundle.git"
+    },
+    {
+      "type": "git",
+      "url": "https://github.com/accurateweb/media-bundle.git"
+    },
+    {
+      "type": "git",
+      "url": "https://github.com/accurateweb/email-template-bundle.git"
+    }
+  ],
+  "require": {
+    "php": ">=5.4",
+    "ext-json": "*",
+    "accurateweb/client-application-bundle": "dev-master",
+    "accurateweb/email-template-bundle": "dev-master",
+    "accurateweb/gpn-website-analytics-bundle": "dev-js",
+    "accurateweb/gpnuserbundle": "dev-master",
+    "accurateweb/image-bundle": "2.x",
+    "accurateweb/media-bundle": "2.x",
+    "doctrine/doctrine-bundle": "~1.4",
+    "doctrine/doctrine-migrations-bundle": "^1.3",
+    "doctrine/orm": "^2.4.8",
+    "eluceo/ical": "^0.11",
+    "friendsofsymfony/user-bundle": "~2.0@dev",
+    "incenteev/composer-parameter-handler": "~2.0",
+    "knplabs/knp-paginator-bundle": "^2.8",
+    "lexik/jwt-authentication-bundle": "1.7.*",
+    "nelmio/cors-bundle": "1.5.6",
+    "sensio/distribution-bundle": "~4.0",
+    "sensio/framework-extra-bundle": "^3.0.2",
+    "sonata-project/admin-bundle": "3.23.0",
+    "sonata-project/doctrine-orm-admin-bundle": "3.0",
+    "stof/doctrine-extensions-bundle": "^1.2",
+    "symfony/monolog-bundle": "^3.0.2",
+    "symfony/swiftmailer-bundle": "~2.3,>=2.3.10",
+    "symfony/symfony": "2.8.*",
+    "twig/twig": "^1.0||^2.0"
+  },
+  "require-dev": {
+    "fzaninotto/faker": "^1.9",
+    "sensio/generator-bundle": "~3.0",
+    "symfony/phpunit-bridge": "~2.7"
+  },
+  "scripts": {
+    "symfony-scripts": [
+      "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
+      "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
+      "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
+      "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
+      "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
+      "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
+    ],
+    "post-install-cmd": [
+      "@symfony-scripts"
+    ],
+    "post-update-cmd": [
+      "@symfony-scripts"
+    ]
+  },
+  "config": {
+    "bin-dir": "bin",
+    "platform": {
+      "php": "5.4.8"
+    },
+    "sort-packages": true
+  },
+  "extra": {
+    "symfony-app-dir": "app",
+    "symfony-web-dir": "web",
+    "symfony-assets-install": "relative",
+    "incenteev-parameters": {
+      "file": "app/config/parameters.yml"
+    },
+    "branch-alias": {
+      "dev-master": "2.8-dev"
+    }
+  }
+}

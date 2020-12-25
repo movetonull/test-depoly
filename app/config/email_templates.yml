@@ -1,0 +1,4 @@
+aw_email_templating:
+  templating:
+    loader: aw_email_templating.template.loader.doctrine
+    entity: AppBundle\Entity\Messaging\EmailTemplate

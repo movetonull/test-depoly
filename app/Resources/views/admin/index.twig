@@ -1,0 +1,27 @@
+{% extends 'admin/adminbase.html.twig' %}
+
+{% block body %}
+	
+	<h1>Админ-панель</h1>
+
+	<p class="card-title">Редактирование новостей</p>
+
+	<ul>
+		<li>
+			<p>При выборе тегов и статусов новости, зажмите кнопку 'ctrl', чтобы выбрать несколько тегов или статусов.<p>
+		</li>
+		<li>
+			<p>Чтобы добавить цитату, нажмите кнопку <img src="/images/quoteIcon.png"> <p>
+		</li>
+		<img src="/images/quoteExample.png">
+		<li>
+			<p>Чтобы добавить цитату с указанием автора, нажмите кнопку <img src="/js/ckeditor/plugins/quote/icons/quote.png"> <p>
+		</li>
+		<img width='600' src="/images/quoteAuthoredExample.png">
+		<li>
+			<p>Чтобы добавить видео, нажмите кнопку <img width='16' src="/js/ckeditor/plugins/video/icons/video.png"> <p>
+		</li>
+	</ul>
+    
+
+{% endblock %}
